@@ -21,7 +21,7 @@ export class UsuariosService {
   }
 
   findOne(id: string) {
-    return JSON.stringify(this.usuarioModel.findById(id));
+    return this.usuarioModel.findById(id);
   }
 
   update(id: string, updateUsuarioDto: UpdateUsuarioDto) {

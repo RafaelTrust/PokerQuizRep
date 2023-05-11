@@ -9,9 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://poker:FGcgTrwCL2CJz7Tn@pokerquizdata.f3duh95.mongodb.net/test',
-    ),
+    MongooseModule.forRoot(process.env.BD_URL),
     UsuariosModule,
     SalasModule,
     PerguntasModule,
