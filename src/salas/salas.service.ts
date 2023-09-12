@@ -7,21 +7,21 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class SalasService {
-  //constructor(@InjectModel(Sala.name) private salaModel: Model<SalaDocument>) {}
+  constructor(@InjectModel(Sala.name) private salaModel: Model<SalaDocument>) {}
 
   create(createSalaDto: CreateSalaDto) {
-    //const sala = new this.salaModel(createSalaDto);
-    return ''; //sala.save();
+    const sala = new this.salaModel(createSalaDto);
+    return sala.save();
   }
 
   findAll() {
-    return ''; //this.salaModel.find();
+    return this.salaModel.find();
   }
 
   findByPlayer(playerFk: string) {
-    return ''; /*this.salaModel.find({
+    return this.salaModel.find({
       responsavel_fk: playerFk,
-    });*/
+    });
   }
 
   findOne(id: number) {

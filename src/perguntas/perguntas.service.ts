@@ -1,26 +1,54 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePerguntaDto } from './dto/create-pergunta.dto';
 import { UpdatePerguntaDto } from './dto/update-pergunta.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Pergunta, PerguntaDocument } from './entities/pergunta.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class PerguntasService {
+  constructor(
+    @InjectModel(Pergunta.name) private porguntaModel: Model<PerguntaDocument>,
+  ) {}
+
   create(createPerguntaDto: CreatePerguntaDto) {
-    return 'This action adds a new pergunta';
+    const pergunta = new this.porguntaModel(createPerguntaDto);
+    return pergunta.save();
   }
 
   findAll() {
-    return `This action returns all perguntas`;
+    return this.porguntaModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pergunta`;
+  findBySala(salaFk: string) {
+    return this.porguntaModel.find({
+      sala_fk: salaFk,
+    });
   }
 
-  update(id: number, updatePerguntaDto: UpdatePerguntaDto) {
-    return `This action updates a #${id} pergunta`;
+  findOne(id: string) {
+    return this.porguntaModel.findById(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pergunta`;
+  update(id: string, updatePerguntaDto: UpdatePerguntaDto) {
+    return this.porguntaModel.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        updatePerguntaDto,
+      },
+      {
+        new: true,
+      },
+    );
+  }
+
+  remove(id: string) {
+    return this.porguntaModel
+      .deleteOne({
+        _id: id,
+      })
+      .exec();
   }
 }

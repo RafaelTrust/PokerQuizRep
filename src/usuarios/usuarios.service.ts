@@ -11,9 +11,20 @@ export class UsuariosService {
     @InjectModel(Usuario.name) private usuarioModel: Model<UsuarioDocument>,
   ) {}
 
-  create(createUsuarioDto: CreateUsuarioDto) {
-    const usuario = new this.usuarioModel(createUsuarioDto);
-    return usuario.save();
+  async create(createUsuarioDto: CreateUsuarioDto) {
+    let passou = true;
+    let listUsuarios = await this.usuarioModel.find().exec();
+    for (let player of listUsuarios) {
+      if (createUsuarioDto.nick === player.nick) {
+        passou = false;
+      }
+    }
+    if (passou) {
+      const usuario = new this.usuarioModel(createUsuarioDto);
+      return usuario.save();
+    } else {
+      return 'nick ja existente';
+    }
   }
 
   findAll() {
@@ -25,28 +36,24 @@ export class UsuariosService {
   }
 
   update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
-    return JSON.stringify(
-      this.usuarioModel.findByIdAndUpdate(
-        {
-          _id: id,
-        },
-        {
-          updateUsuarioDto,
-        },
-        {
-          new: true,
-        },
-      ),
+    return this.usuarioModel.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        updateUsuarioDto,
+      },
+      {
+        new: true,
+      },
     );
   }
 
   remove(id: string) {
-    return JSON.stringify(
-      this.usuarioModel
-        .deleteOne({
-          _id: id,
-        })
-        .exec(),
-    );
+    return this.usuarioModel
+      .deleteOne({
+        _id: id,
+      })
+      .exec();
   }
 }

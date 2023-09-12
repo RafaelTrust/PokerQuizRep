@@ -6,9 +6,6 @@ export type SalaDocument = Sala & Document;
 @Schema()
 export class Sala {
   @Prop()
-  id: string;
-
-  @Prop()
   nome: string;
 
   @Prop()
@@ -18,7 +15,7 @@ export class Sala {
   dinheiroTotal: number;
 
   @Prop()
-  responsavel_fk: number;
+  responsavel_fk: string;
 
   @Prop()
   limitJogadores: number;

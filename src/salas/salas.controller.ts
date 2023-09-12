@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SalasService } from './salas.service';
 import { CreateSalaDto } from './dto/create-sala.dto';
 import { UpdateSalaDto } from './dto/update-sala.dto';
@@ -15,6 +23,11 @@ export class SalasController {
   @Get()
   findAll() {
     return this.salasService.findAll();
+  }
+
+  @Get('responsavel/:id')
+  findSalasByPlayer(@Param('id') id: string) {
+    return this.salasService.findByPlayer(id);
   }
 
   @Get(':id')
