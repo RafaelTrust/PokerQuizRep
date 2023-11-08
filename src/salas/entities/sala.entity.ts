@@ -9,10 +9,10 @@ export class Sala {
   nome: string;
 
   @Prop()
-  senha: string;
+  senha?: string;
 
   @Prop()
-  dinheiroTotal: number;
+  dinheiroPorJogador: number;
 
   @Prop()
   responsavel_fk: string;
@@ -25,6 +25,9 @@ export class Sala {
 
   @Prop()
   powerUps: string;
+
+  @Prop()
+  codSala: string;
 }
 
 export const SalaSchema = SchemaFactory.createForClass(Sala);

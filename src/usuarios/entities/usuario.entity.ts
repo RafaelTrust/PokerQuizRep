@@ -16,6 +16,9 @@ export class Usuario {
 
   @Prop()
   senha: string;
+
+  @Prop()
+  codValida: string;
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);

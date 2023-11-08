@@ -6,23 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { PerguntasService } from './perguntas.service';
 import { CreatePerguntaDto } from './dto/create-pergunta.dto';
 import { UpdatePerguntaDto } from './dto/update-pergunta.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('perguntas')
+@UseGuards(AuthGuard('jwt'))
 export class PerguntasController {
   constructor(private readonly perguntasService: PerguntasService) {}
 
   @Post()
   create(@Body() createPerguntaDto: CreatePerguntaDto) {
     return this.perguntasService.create(createPerguntaDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.perguntasService.findAll();
   }
 
   @Get('sala/:id')

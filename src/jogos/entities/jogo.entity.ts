@@ -9,6 +9,15 @@ export class Jogo {
   rodada: number;
 
   @Prop()
+  pergunta_fk?: string;
+
+  @Prop()
+  montante: number;
+
+  @Prop()
+  apostaMinima: number;
+
+  @Prop()
   vencedor: string;
 }
 

@@ -18,7 +18,7 @@ export class SalaJogador {
   dinheiro: number;
 
   @Prop()
-  powerUps: string;
+  decisao: string;
 
   @Prop()
   jogo_fk: string;

@@ -6,6 +6,9 @@ import { SalasModule } from './salas/salas.module';
 import { PerguntasModule } from './perguntas/perguntas.module';
 import { JogosModule } from './jogos/jogos.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
+import { EmailModule } from './email/email.module';
+import { BibliotecaModule } from './biblioteca/biblioteca.module';
 
 @Module({
   imports: [
@@ -14,6 +17,9 @@ import { MongooseModule } from '@nestjs/mongoose';
     SalasModule,
     PerguntasModule,
     JogosModule,
+    AuthModule,
+    EmailModule,
+    BibliotecaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,8 +1,8 @@
 export class CreateSalaJogadoresDto {
   sala_fk: number;
-  jogador_fk?: number;
-  nickJogador?: string;
+  jogador_fk?: string;
+  nickJogador: string;
   dinheiro: number;
-  powerUps: string;
+  decisao: string;
   jogo_fk: number;
 }
