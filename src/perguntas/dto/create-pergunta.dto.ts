@@ -1,5 +1,5 @@
 export class CreatePerguntaDto {
-  pergunta: string;
+  enun: string;
   alternativa1: string;
   alternativa2: string;
   alternativa3: string;

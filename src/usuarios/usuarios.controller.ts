@@ -32,6 +32,11 @@ export class UsuariosController {
     return await this.usuariosService.verificaNick(nick);
   }
 
+  @Get('verifica-email/:email')
+  async verificaEmail(@Param('nick') nick: string) {
+    return await this.usuariosService.verificaEmail(nick);
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Get()
   async findAll() {
@@ -39,8 +44,8 @@ export class UsuariosController {
   }
 
   @Get('email/:email')
-  async findEmailBool(@Param('email') email: string) {
-    return await this.usuariosService.findEmailBool(email);
+  async findEmail(@Param('email') email: string) {
+    return await this.usuariosService.findEmail(email);
   }
 
   @Get('esquece/:cod')
@@ -49,18 +54,18 @@ export class UsuariosController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.usuariosService.findOne(id);
+  @Get(':nick')
+  async findOne(@Param('nick') nick: string) {
+    return await this.usuariosService.findOne(nick);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   async update(
-    @Param('id') id: string,
     @Body() updateUsuarioDto: UpdateUsuarioDto,
+    @Param('id') id: string,
   ) {
-    return await this.usuariosService.update(id, updateUsuarioDto);
+    return await this.usuariosService.update(updateUsuarioDto, id);
   }
 
   @UseGuards(AuthGuard('jwt'))

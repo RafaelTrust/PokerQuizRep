@@ -6,11 +6,16 @@ import { Sala, SalaDocument } from './entities/sala.entity';
 import { Model } from 'mongoose';
 import { BibliotecaService } from 'src/biblioteca/biblioteca.service';
 import { EmailService } from 'src/email/email.service';
+import {
+  Pergunta,
+  PerguntaDocument,
+} from 'src/perguntas/entities/pergunta.entity';
 
 @Injectable()
 export class SalasService {
   constructor(
     @InjectModel(Sala.name) private salaModel: Model<SalaDocument>,
+    @InjectModel(Pergunta.name) private perguntaModel: Model<PerguntaDocument>,
     private readonly bibliotecaService: BibliotecaService,
     private readonly emailService: EmailService,
   ) {}
@@ -21,7 +26,7 @@ export class SalasService {
     let verificado = false;
     while (!verificado) {
       verificado = true;
-      cod = this.bibliotecaService.generateRandomConfirmationCode;
+      cod = this.bibliotecaService.generateRandomConfirmationCode(6);
       for (let room of listSalas) {
         if (room.codSala === cod) {
           verificado = false;
@@ -33,28 +38,46 @@ export class SalasService {
       codSala: cod,
     });
     await sala.save();
-    return { codigoSala: cod };
+    let mesas = await this.salaModel.find({
+      responsavel_fk: sala.responsavel_fk,
+    });
+    return {
+      mesas,
+    };
   }
 
   findAll() {
     return this.salaModel.find();
   }
 
-  findByPlayer(playerFk: string) {
-    return this.salaModel.find({
+  async findByPlayer(playerFk: string) {
+    let mesas = await this.salaModel.find({
       responsavel_fk: playerFk,
     });
+    return {
+      mesas,
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sala`;
+  async findOne(cod: string) {
+    return await this.salaModel.findOne({ codSala: cod });
   }
 
-  update(id: number, updateSalaDto: UpdateSalaDto) {
-    return `This action updates a #${id} sala`;
+  async update(id: string, updateSalaDto: UpdateSalaDto) {
+    let sala = await this.salaModel.findById({ _id: id });
+    sala = Object.assign(sala, updateSalaDto);
+    return await sala.save();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sala`;
+  async remove(id: string) {
+    let mesa = await this.salaModel.findOne({ _id: id }).exec();
+    await this.perguntaModel.deleteMany({ sala_fk: id }).exec();
+    await this.salaModel.deleteOne({ _id: id }).exec();
+    let mesas = await this.salaModel.find({
+      responsavel_fk: mesa.responsavel_fk,
+    });
+    return {
+      mesas,
+    };
   }
 }

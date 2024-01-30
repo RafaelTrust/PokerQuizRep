@@ -9,7 +9,7 @@ export class EmailController {
   async enviarEmail() {
     try {
       await this.emailService.sendEmail(
-        'rafaelimaferreira@gmail.com',
+        'rafaeltrust@outlook.com',
         'Testando',
         'sadas',
       );

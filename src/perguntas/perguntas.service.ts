@@ -11,44 +11,45 @@ export class PerguntasService {
     @InjectModel(Pergunta.name) private porguntaModel: Model<PerguntaDocument>,
   ) {}
 
-  create(createPerguntaDto: CreatePerguntaDto) {
-    const pergunta = new this.porguntaModel(createPerguntaDto);
-    return pergunta.save();
+  async create(createPerguntaDto: CreatePerguntaDto) {
+    const pergunta = await new this.porguntaModel(createPerguntaDto);
+    await pergunta.save();
+    let listaPerguntas = await this.porguntaModel.find({
+      sala_fk: pergunta.sala_fk,
+    });
+    return {
+      listaPerguntas,
+    };
   }
 
   findAll() {
     return this.porguntaModel.find();
   }
 
-  findBySala(salaFk: string) {
-    return this.porguntaModel.find({
-      sala_fk: salaFk,
-    });
+  async findBySala(sala_fk: string) {
+    let listaPerguntas = await this.porguntaModel.find({ sala_fk });
+    return {
+      listaPerguntas,
+    };
   }
 
-  findOne(id: string) {
-    return this.porguntaModel.findById(id);
+  async findOne(id: string) {
+    return await this.porguntaModel.findById(id);
   }
 
-  update(id: string, updatePerguntaDto: UpdatePerguntaDto) {
-    return this.porguntaModel.findByIdAndUpdate(
-      {
-        _id: id,
-      },
-      {
-        updatePerguntaDto,
-      },
-      {
-        new: true,
-      },
-    );
+  async update(id: string, updatePerguntaDto: UpdatePerguntaDto) {
+    let pergunta = await this.porguntaModel.findOne({ _id: id });
+    pergunta = Object.assign(pergunta, updatePerguntaDto);
+    return pergunta.save();
   }
 
-  remove(id: string) {
-    return this.porguntaModel
-      .deleteOne({
-        _id: id,
-      })
-      .exec();
+  async remove(id: string) {
+    let pergunta = await this.porguntaModel.findOne({ _id: id }).exec();
+    let sala_fk = pergunta.sala_fk;
+    await this.porguntaModel.deleteOne({ _id: id }).exec();
+    let listaPerguntas = await this.porguntaModel.find({ sala_fk });
+    return {
+      listaPerguntas,
+    };
   }
 }

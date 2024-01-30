@@ -24,9 +24,6 @@ export class Sala {
   limitPerguntas: number;
 
   @Prop()
-  powerUps: string;
-
-  @Prop()
   codSala: string;
 }
 

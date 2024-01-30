@@ -20,10 +20,18 @@ export class AuthService {
   ) {}
 
   async login(usuario: Usuario) {
+    if (!usuario.cadastroValido) {
+      return {
+        token: '',
+        nick: '',
+      };
+    }
     const payload = { sub: usuario.nick, email: usuario.email };
 
+    //return this.jwtService.sign(payload);
     return {
       token: this.jwtService.sign(payload),
+      nick: usuario.nick,
     };
   }
 
@@ -47,7 +55,7 @@ export class AuthService {
       return null;
     }
 
-    if (usuario.codValida) return null;
+    if (usuario.codValida && usuario.cadastroValido) return null;
 
     const senhaValida = compareSync(senha, usuario.senha);
     if (!senhaValida) return null;

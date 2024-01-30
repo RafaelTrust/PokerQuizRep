@@ -6,7 +6,7 @@ export type PerguntaDocument = Pergunta & Document;
 @Schema()
 export class Pergunta {
   @Prop()
-  enum: string;
+  enun: string;
 
   @Prop()
   alternativa1: string;

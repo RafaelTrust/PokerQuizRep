@@ -33,18 +33,18 @@ export class SalasController {
     return this.salasService.findByPlayer(id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.salasService.findOne(+id);
+  @Get(':cod')
+  findOne(@Param('cod') cod: string) {
+    return this.salasService.findOne(cod);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSalaDto: UpdateSalaDto) {
-    return this.salasService.update(+id, updateSalaDto);
+    return this.salasService.update(id, updateSalaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.salasService.remove(+id);
+    return this.salasService.remove(id);
   }
 }

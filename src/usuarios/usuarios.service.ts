@@ -48,13 +48,15 @@ export class UsuariosService {
       const usuario = await new this.usuarioModel({
         ...createUsuarioDto,
         codValida,
+        cadastroValido: false,
       });
       await this.emailService.sendEmail(
         usuario.email,
         'Confirmando Email',
-        `Clique na link a baixo \nhttp://localhost:3003/usuarios/verifica-cadastro/${codValida}`,
+        `Passe esse codigo para o app ${codValida}`,
       );
-      return await usuario.save();
+      await usuario.save();
+      return codValida;
     } else {
       throw 'nick ou email ja existente';
     }
@@ -65,12 +67,19 @@ export class UsuariosService {
     return { nickValido: !usuario };
   }
 
+  async verificaEmail(email: string) {
+    let usuario = await this.usuarioModel.findOne({ email });
+    return { emailValido: !usuario };
+  }
+
   async verificaCadastro(cod: string) {
-    const usuario = await this.usuarioModel.findOne();
+    const usuario = await this.usuarioModel.findOne({ codValida: cod });
     if (usuario) {
       usuario.codValida = null;
+      usuario.cadastroValido = true;
       usuario.save();
-      return 'Validado com sucesso';
+      const payload = { sub: usuario.nick, email: usuario.email };
+      return this.jwtService.sign(payload, { expiresIn: '1h' });
     } else {
       throw 'Codigo invalido';
     }
@@ -84,22 +93,23 @@ export class UsuariosService {
     return await this.usuarioModel.find();
   }
 
-  async findOne(id: string) {
-    return await this.usuarioModel.findById(id);
+  async findOne(nick: string) {
+    return await this.usuarioModel.findOne({ nick });
   }
 
-  async update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
-    return await this.usuarioModel.findByIdAndUpdate(
-      {
-        _id: id,
-      },
-      {
-        updateUsuarioDto,
-      },
-      {
-        new: false,
-      },
-    );
+  async update(updateUsuarioDto: UpdateUsuarioDto, id: string) {
+    let usuario = await this.usuarioModel
+      .findOne({
+        email: updateUsuarioDto.email,
+        senha: updateUsuarioDto.senha,
+      })
+      .exec();
+    if (!usuario) {
+      updateUsuarioDto.senha = await hashSync(updateUsuarioDto.senha, 10);
+    }
+    let updateUsuario = await this.usuarioModel.findById({ _id: id });
+    updateUsuario = Object.assign(updateUsuario, updateUsuarioDto);
+    return await updateUsuario.save();
   }
 
   async remove(id: string) {
@@ -110,8 +120,8 @@ export class UsuariosService {
       .exec();
   }
 
-  async findEmailBool(email: string) {
-    const usuario = await this.usuarioModel.findOne({ email }).exec();
+  async findEmail(email: string) {
+    const usuario = await this.usuarioModel.findOne({ email });
     let cod = '000000';
     let valido = true;
     if (usuario) {
@@ -127,6 +137,8 @@ export class UsuariosService {
         'Codigo de Recuperação',
         `O codigo para resetar sua senha: ${cod}`,
       );
+    } else {
+      throw 'falha ao encontrar email';
     }
     return cod;
   }
