@@ -6,5 +6,5 @@ export class CreatePerguntaDto {
   alternativa4: string;
   correto: number;
   timer: number;
-  sala_fk: number;
+  sala_fk: string;
 }

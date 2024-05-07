@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { SalasModule } from './salas/salas.module';
 import { PerguntasModule } from './perguntas/perguntas.module';
-import { JogosModule } from './jogos/jogos.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { BibliotecaModule } from './biblioteca/biblioteca.module';
+import { RecordeModule } from './recorde/recorde.module';
 
 @Module({
   imports: [
@@ -16,10 +16,10 @@ import { BibliotecaModule } from './biblioteca/biblioteca.module';
     UsuariosModule,
     SalasModule,
     PerguntasModule,
-    JogosModule,
     AuthModule,
     EmailModule,
     BibliotecaModule,
+    RecordeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

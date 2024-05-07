@@ -37,7 +37,11 @@ export class AuthService {
 
   async revokeToken(token: string) {
     await this.limparBlackList();
-    const revokedToken = new this.revokedTokenModel({ token });
+    const dataAtual = new Date();
+    const revokedToken = new this.revokedTokenModel({
+      token,
+      data: dataAtual.toDateString(),
+    });
     await revokedToken.save();
   }
 
@@ -63,6 +67,7 @@ export class AuthService {
     return usuario;
   }
 
+  //Corrigir
   async limparBlackList() {
     try {
       const expirationDate = new Date();

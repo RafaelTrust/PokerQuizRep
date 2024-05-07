@@ -17,8 +17,24 @@ export class SalasService {
     @InjectModel(Sala.name) private salaModel: Model<SalaDocument>,
     @InjectModel(Pergunta.name) private perguntaModel: Model<PerguntaDocument>,
     private readonly bibliotecaService: BibliotecaService,
-    private readonly emailService: EmailService,
   ) {}
+
+  async findPerguntasSalaPublica(cod: string) {
+    const sala = await this.salaModel.findOne({ codSala: cod });
+    const listaPerguntas = await this.perguntaModel.find({ sala_fk: sala._id });
+    return {
+      sala,
+      listaPerguntas,
+    };
+  }
+
+  async findSalasPublicas() {
+    const mesas = await this.salaModel.find({ publico: true });
+    console.log(mesas.toString());
+    return {
+      mesas,
+    };
+  }
 
   async create(createSalaDto: CreateSalaDto) {
     const listSalas = await this.salaModel.find().exec();
@@ -44,10 +60,6 @@ export class SalasService {
     return {
       mesas,
     };
-  }
-
-  findAll() {
-    return this.salaModel.find();
   }
 
   async findByPlayer(playerFk: string) {

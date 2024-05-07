@@ -9,22 +9,19 @@ export class Sala {
   nome: string;
 
   @Prop()
-  senha?: string;
-
-  @Prop()
-  dinheiroPorJogador: number;
+  tema: string;
 
   @Prop()
   responsavel_fk: string;
-
-  @Prop()
-  limitJogadores: number;
 
   @Prop()
   limitPerguntas: number;
 
   @Prop()
   codSala: string;
+
+  @Prop()
+  publico: Boolean;
 }
 
 export const SalaSchema = SchemaFactory.createForClass(Sala);

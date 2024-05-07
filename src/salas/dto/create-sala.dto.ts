@@ -1,8 +1,8 @@
 export class CreateSalaDto {
   nome: string;
-  senha?: string;
-  dinheiroPorJogador: number;
   responsavel_fk: string;
-  limitJogadores: number;
+  tema: string;
   limitPerguntas: number;
+  publico: Boolean;
+  online: Boolean;
 }

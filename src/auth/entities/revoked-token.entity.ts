@@ -7,6 +7,9 @@ export type RevokedTokenDocument = RevokedToken & Document;
 export class RevokedToken extends Document {
   @Prop({ required: true, unique: true })
   token: string;
+
+  @Prop()
+  data: string;
 }
 
 export const RevokedTokenModel = SchemaFactory.createForClass(RevokedToken);

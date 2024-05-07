@@ -4,6 +4,7 @@ import { PerguntasController } from './perguntas.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Pergunta, PerguntaSchema } from './entities/pergunta.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { Sala, SalaSchema } from 'src/salas/entities/sala.entity';
 
 @Module({
   imports: [
