@@ -140,7 +140,7 @@ export class UsuariosService {
     } else {
       throw 'falha ao encontrar email';
     }
-    return cod;
+    return usuario;
   }
 
   async esqueciSenha(cod: string) {
