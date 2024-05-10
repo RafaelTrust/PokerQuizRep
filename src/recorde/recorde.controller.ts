@@ -36,4 +36,9 @@ export class RecordeController {
   deleteAll() {
     return this.recordeService.deleteAll();
   }
+
+  @Delete('ranking')
+  deleteAllRecordes() {
+    return this.recordeService.deleteAllRecordes();
+  }
 }
