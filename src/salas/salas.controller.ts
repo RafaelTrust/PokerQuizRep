@@ -45,7 +45,7 @@ export class SalasController {
     return this.salasService.findOne(cod);
   }
 
-  @Patch(':id')
+  @Post(':id')
   @UseGuards(AuthGuard('jwt'))
   update(@Param('id') id: string, @Body() updateSalaDto: UpdateSalaDto) {
     return this.salasService.update(id, updateSalaDto);
