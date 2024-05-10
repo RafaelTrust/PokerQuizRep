@@ -31,14 +31,4 @@ export class RecordeController {
   findSalaEstatisticas(@Param('cod') cod: string) {
     return this.recordeService.getSalaEstatistica(cod);
   }
-
-  @Delete()
-  deleteAll() {
-    return this.recordeService.deleteAll();
-  }
-
-  @Delete('ranking')
-  deleteAllRecordes() {
-    return this.recordeService.deleteAllRecordes();
-  }
 }
