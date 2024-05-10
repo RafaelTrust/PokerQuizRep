@@ -60,7 +60,7 @@ export class UsuariosController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Patch(':id')
+  @Post(':id')
   async update(
     @Body() updateUsuarioDto: UpdateUsuarioDto,
     @Param('id') id: string,

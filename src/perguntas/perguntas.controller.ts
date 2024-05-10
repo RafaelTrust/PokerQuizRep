@@ -41,7 +41,7 @@ export class PerguntasController {
     return this.perguntasService.findOne(id);
   }
 
-  @Patch(':id')
+  @Post(':id')
   @UseGuards(AuthGuard('jwt'))
   update(
     @Param('id') id: string,
