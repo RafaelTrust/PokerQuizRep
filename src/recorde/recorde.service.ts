@@ -72,8 +72,4 @@ export class RecordeService {
       listaEstatistica,
     };
   }
-
-  async deleteAll() {
-    return await this.estatisticaModdel.deleteMany();
-  }
 }
