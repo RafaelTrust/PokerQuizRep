@@ -14,6 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiOkResponse,
+  ApiOperation,
   ApiParam,
   ApiResponse,
   ApiTags,
@@ -31,10 +32,12 @@ import { DeleteGeneral } from 'src/biblioteca/Err/delete-general';
 export class SalasController {
   constructor(private readonly salasService: SalasService) {}
 
-  /**
-   * Encontra a sala pelo codigo solicitado e traz todas as perguntas cadastradas dentro dela
-   */
   @Get('solitario/:cod')
+  @ApiOperation({
+    summary: 'Encontra a sala e perguntas',
+    description:
+      'Encontra a sala pelo codigo solicitado e traz todas as perguntas cadastradas dentro dela',
+  })
   @ApiOkResponse({
     type: SalaPerguntaResponse,
     description: 'Resposta da api ao encontrar a mesa para iniciar o jogo.',
@@ -53,9 +56,10 @@ export class SalasController {
     return this.salasService.findPerguntasSala(cod);
   }
 
-  /**
-   * Busca por todas as sala publicas
-   */
+  @Get('publicas')
+  @ApiOperation({
+    summary: 'Busca por todas as sala publicas',
+  })
   @ApiOkResponse({
     type: ListaPerguntasResponse,
     description:
@@ -66,17 +70,16 @@ export class SalasController {
     type: ErroInterno,
     description: 'Erro interno do servidor não disponível para o usuario',
   })
-  @Get('publicas')
   findSalasPublicas() {
     return this.salasService.findSalasPublicas();
   }
 
-  /**
-   * Cadastro de uma sala pelo usuario
-   */
   @Post('cadastro')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Cadastra uma sala pelo usuario',
+  })
   @ApiResponse({
     status: 201,
     type: ListaPerguntasResponse,
@@ -97,12 +100,12 @@ export class SalasController {
     return this.salasService.create(createSalaDto);
   }
 
-  /**
-   * Busca por todas as mesas do usuario
-   */
   @Get('responsavel/:id')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Busca todas as mesas do usuario',
+  })
   @ApiOkResponse({
     type: ListaPerguntasResponse,
     description: 'Retornando todas as mesas cadastradas pelo usuario',
@@ -131,12 +134,13 @@ export class SalasController {
     return this.salasService.findByPlayer(id);
   }
 
-  /**
-   * Busca por uma mesa especifica através do codigo dela
-   */
   @Get(':cod')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Busca uma mesa',
+    description: 'Busca por uma mesa especifica através do codigo dela',
+  })
   @ApiOkResponse({
     type: SalaResponse,
     description: 'Mesa encontrada com sucesso',
@@ -160,12 +164,13 @@ export class SalasController {
     return this.salasService.findOne(cod);
   }
 
-  /**
-   * Atualiza a mesa especifica atravez de seu id do banco
-   */
   @Post(':id')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Atualiza a mesa',
+    description: 'Atualiza a mesa especifica atravez de seu id do banco',
+  })
   @ApiOkResponse({
     type: SalaResponse,
     description: 'Mesa encontrada com sucesso',
@@ -189,12 +194,14 @@ export class SalasController {
     return this.salasService.update(id, updateSalaDto);
   }
 
-  /**
-   * Deleta a mesa especifica junto de todas as perguntas cadastradas com ela atravez do seu id
-   */
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Deleta tudo da mesa',
+    description:
+      'Deleta a mesa especifica junto de todas as perguntas cadastradas com ela atravez do seu id',
+  })
   @ApiOkResponse({
     type: DeleteGeneral,
     description: 'Mesa deletada junto de todas as perguntas com ela',

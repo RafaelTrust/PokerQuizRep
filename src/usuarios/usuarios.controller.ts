@@ -14,6 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiOkResponse,
+  ApiOperation,
   ApiParam,
   ApiResponse,
   ApiTags,
@@ -36,10 +37,10 @@ import { DeleteGeneral } from 'src/biblioteca/Err/delete-general';
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
-  /**
-   * Cria o cadastro do usuario
-   */
   @Post('cadastro')
+  @ApiOperation({
+    summary: 'Cria o cadastro do usuario',
+  })
   @ApiResponse({
     status: 201,
     type: CadastroResponse,
@@ -61,10 +62,11 @@ export class UsuariosController {
     return await this.usuariosService.create(createUsuarioDto);
   }
 
-  /**
-   * Faz o usuario estar finalmente validado para uso
-   */
   @Get('verifica-cadastro/:cod')
+  @ApiOperation({
+    summary: 'Valida o cadastro',
+    description: 'Faz o usuario estar finalmente validado para uso',
+  })
   @ApiOkResponse({
     type: TokenResponse,
     description: 'Resposta da api ao encontrar e validar o usuario.',
@@ -88,10 +90,12 @@ export class UsuariosController {
     return await this.usuariosService.verificaCadastro(cod);
   }
 
-  /**
-   * Verifica se o nick fornecido ja existe no sistema para validar um novo possivel cadastro
-   */
   @Get('verifica-nick/:nick')
+  @ApiOperation({
+    summary: 'Nick é permmitido?',
+    description:
+      'Verifica se o nick fornecido ja existe no sistema para validar um novo possivel cadastro',
+  })
   @ApiOkResponse({
     type: NickValidoResponse,
     description: 'Resposta da api se esta disponivel o nick para cadastro',
@@ -110,10 +114,12 @@ export class UsuariosController {
     return await this.usuariosService.verificaNick(nick);
   }
 
-  /**
-   * Verifica se o email fornecido ja existe no sistema para validar um novo possivel cadastro
-   */
   @Get('verifica-email/:email')
+  @ApiOperation({
+    summary: 'Email é permitido?',
+    description:
+      'Verifica se o email fornecido ja existe no sistema para validar um novo possivel cadastro',
+  })
   @ApiOkResponse({
     type: EmailValidoResponse,
     description: 'Resposta da api se esta disponivel o email para cadastro',
@@ -132,10 +138,12 @@ export class UsuariosController {
     return await this.usuariosService.verificaEmail(email);
   }
 
-  /**
-   * Busca email para recuperação de senha esquecida enviando um codigo de recuperação por email.
-   */
   @Get('email/:email')
+  @ApiOperation({
+    summary: 'Busca email',
+    description:
+      'Busca email para recuperação de senha esquecida enviando um codigo de recuperação por email.',
+  })
   @ApiOkResponse({
     type: UsuarioResponse,
     description: 'Resposta da api ao encontrar algum nick existente.',
@@ -160,9 +168,13 @@ export class UsuariosController {
   }
 
   /**
-   * Verifica se o codigo de recuperação de senha esta correto;
+   * Verifica se o codigo de recuperação de senha esta correto
    */
   @Get('esquece/:cod')
+  @ApiOperation({
+    summary: 'Codigo de recuperação de senha',
+    description: 'Verifica se o codigo de recuperação de senha esta correto',
+  })
   @ApiOkResponse({
     type: TokenResponse,
     description: 'Resposta da api ao encontrar algum nick existente.',
@@ -186,12 +198,13 @@ export class UsuariosController {
     return await this.usuariosService.esqueciSenha(cod);
   }
 
-  /**
-   * Busca dados do usuario pelo seu nick
-   */
   @UseGuards(AuthGuard('jwt'))
   @Get(':nick')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Busca usuario pelo nick',
+    description: 'Busca dados do usuario pelo seu nick',
+  })
   @ApiOkResponse({
     type: UsuarioResponse,
     description: 'Dados do usuario recuperado com sucesso',
@@ -220,12 +233,12 @@ export class UsuariosController {
     return await this.usuariosService.findOne(nick);
   }
 
-  /**
-   * Atualiza dados do usuario
-   */
   @UseGuards(AuthGuard('jwt'))
   @Post(':id')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Atualiza dados do usuario',
+  })
   @ApiOkResponse({
     type: UsuarioResponse,
     description: 'Usuario atualizado com sucesso',
@@ -257,12 +270,12 @@ export class UsuariosController {
     return await this.usuariosService.update(updateUsuarioDto, id);
   }
 
-  /**
-   * Deleta usuario
-   */
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Deleta usuario',
+  })
   @ApiOkResponse({
     type: DeleteGeneral,
     description: 'Usuario deletado com sucesso',

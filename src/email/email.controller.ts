@@ -1,6 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { EmailService } from './email.service';
-import { ApiOkResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EmailResponse } from './response/email-response';
 import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 
@@ -9,10 +15,11 @@ import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
-  /**
-   * Envia um email para o email selecionado como teste interno
-   */
   @Get('teste/:email')
+  @ApiOperation({
+    summary: 'Testa envio de email',
+    description: 'Envia um email para o email selecionado como teste interno',
+  })
   @ApiOkResponse({
     type: EmailResponse,
     description: 'Email enviado com sucesso.',

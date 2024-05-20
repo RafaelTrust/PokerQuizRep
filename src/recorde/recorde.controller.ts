@@ -2,7 +2,13 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { RecordeService } from './recorde.service';
 import { RecordeCreateDto } from './dto/recorde-create.dto';
 import { EstatisticaCompletoCreateDto } from './dto/estatistica-create.dto';
-import { ApiOkResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { RecordeResponse } from './response/recorde-response';
 import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 import { ListaRecordeResponse } from './response/lista-recorde-response';
@@ -16,10 +22,11 @@ import { ErroEstatistica } from './response/err/erro-estatistica';
 export class RecordeController {
   constructor(private readonly recordeService: RecordeService) {}
 
-  /**
-   * Cria um registro de recorde após a conclusão do jogo online
-   */
   @Post('criar')
+  @ApiOperation({
+    summary: 'Cria recorde',
+    description: 'Cria um registro de recorde após a conclusão do jogo online',
+  })
   @ApiResponse({
     status: 201,
     type: RecordeResponse,
@@ -34,10 +41,10 @@ export class RecordeController {
     return this.recordeService.createRecorde(recordeCreateDto);
   }
 
-  /**
-   * Busca lista de recordes de uma sala
-   */
   @Get('sala/:cod')
+  @ApiOperation({
+    summary: 'Busca lista de recordes da sala',
+  })
   @ApiOkResponse({
     type: ListaRecordeResponse,
     description: 'Lista de recordes recuperado com sucesso',
@@ -61,10 +68,11 @@ export class RecordeController {
     return this.recordeService.findRecordSala(cod);
   }
 
-  /**
-   * Cadastra a resposta a uma pergunta dentro de uma sala
-   */
   @Post('criarEstatiscas')
+  @ApiOperation({
+    summary: 'Cadastra a resposta',
+    description: 'Cadastra a resposta de uma pergunta dentro de uma sala',
+  })
   @ApiResponse({
     status: 201,
     type: EstatisticaResponse,
@@ -81,10 +89,12 @@ export class RecordeController {
     return this.recordeService.createEstatistica(estatisticaCreateDto);
   }
 
-  /**
-   * Busca por todas as respostas feitas por todos os usuarios na mesa
-   */
   @Get('estatistica/:cod')
+  @ApiOperation({
+    summary: 'Busca todas respostas da mesa',
+    description:
+      'Busca por todas as respostas feitas por todos os usuarios na mesa',
+  })
   @ApiOkResponse({
     type: ListaRecordeResponse,
     description:

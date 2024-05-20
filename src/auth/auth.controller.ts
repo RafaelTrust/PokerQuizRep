@@ -5,6 +5,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOkResponse,
+  ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -21,11 +22,13 @@ import { CreatedTokenResponse } from './response/token-criado-response';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  /**
-   * Realisa o login do usuario
-   */
   @UseGuards(AuthGuard('local'))
   @Post('login')
+  @ApiOperation({
+    summary: 'login do usuario',
+    description:
+      'Cria um token valido por apenas 1h para cada novo login realizado.',
+  })
   @ApiResponse({
     status: 201,
     type: CreatedTokenResponse,
@@ -55,6 +58,10 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   @Post('logout')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Logout do usuario',
+    description: 'Realisa o logout do usuario descartando o token criado',
+  })
   @ApiOkResponse({
     type: LogoutResponse,
     description: 'Token descartado com sucesso',

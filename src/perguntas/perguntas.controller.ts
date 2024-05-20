@@ -17,6 +17,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOkResponse,
+  ApiOperation,
   ApiParam,
   ApiResponse,
   ApiTags,
@@ -34,12 +35,14 @@ import { ErroUnauthorized } from 'src/biblioteca/Err/erro-unauthorized';
 export class PerguntasController {
   constructor(private readonly perguntasService: PerguntasService) {}
 
-  /**
-   * Usuario pede para a IA auxilia-lo na criação de perguntas para quiz.
-   */
   @Post('ai-generate')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Gerar pergunta IA',
+    description:
+      'Usuario pede para a IA auxilia-lo na criação de perguntas para quiz.',
+  })
   @ApiResponse({
     status: 201,
     type: PerguntaResponse,
@@ -64,12 +67,12 @@ export class PerguntasController {
     return this.perguntasService.chatCompletion(dto);
   }
 
-  /**
-   * Cadastra a pergunta criada pelo usuario
-   */
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Cadastra a pergunta criada',
+  })
   @ApiResponse({
     status: 201,
     type: PerguntaResponse,
@@ -89,12 +92,13 @@ export class PerguntasController {
     return this.perguntasService.create(createPerguntaDto);
   }
 
-  /**
-   * Busca todas as perguntas de uma sala criada pelo usuario
-   */
   @Get('sala/:id')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Busca as perguntas da sala',
+    description: 'Busca por todas as perguntas de uma sala criada pelo usuario',
+  })
   @ApiOkResponse({
     type: ListaPerguntaResponse,
     description:
@@ -124,12 +128,12 @@ export class PerguntasController {
     return this.perguntasService.findBySala(id);
   }
 
-  /**
-   * Busca uma pergunta através de seu id
-   */
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Busca uma pergunta',
+  })
   @ApiResponse({
     type: PerguntaResponse,
     description: 'Pergunta enncontrada com sucesso.',
@@ -158,12 +162,12 @@ export class PerguntasController {
     return this.perguntasService.findOne(id);
   }
 
-  /**
-   * Atualiza a pergunta que esta cadastrada
-   */
   @Post(':id')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Atualiza a pergunta',
+  })
   @ApiOkResponse({
     type: PerguntaResponse,
     description: 'Pergunta atualizada com sucesso',
@@ -195,12 +199,12 @@ export class PerguntasController {
     return this.perguntasService.update(id, updatePerguntaDto);
   }
 
-  /**
-   * Deleta a pergunta cadastrada
-   */
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Deleta a pergunta',
+  })
   @ApiOkResponse({
     type: DeleteGeneral,
     description: 'Usuario deletado com sucesso',
