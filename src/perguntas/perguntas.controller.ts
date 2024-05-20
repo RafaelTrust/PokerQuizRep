@@ -129,7 +129,6 @@ export class PerguntasController {
   }
 
   @Get(':id')
-  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Busca uma pergunta',
   })
