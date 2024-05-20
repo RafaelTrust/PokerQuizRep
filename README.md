@@ -4,16 +4,16 @@
 
   O PokerQuiz é uma plataforma online única, projetada para oferecer aos usuários uma experiência personalizada. Como um quiz customizável, o aplicativo permite a geração de perguntas sobre uma ampla gama de tópicos, adaptados aos interesses individuais de cada usuário.
 
-## Sobre este repositorio
+## Sobre este repositório
 
-  Este repositorio é referente ao servidor NestJS que fica responsavel pela logica de negocio.
+  Este repositório é referente ao servidor NestJS que fica responsável pela lógica de negócio.
 
 ## Links relacionados
 
   * Documentação da API: https://poker-quiz-rep.vercel.app/doc
-  * Repositorio NestJS: https://github.com/nestjs/nest
+  * Repositório NestJS: https://github.com/nestjs/nest
   * Artigo: https://docs.google.com/document/
-  * Repositorio do Aplicativo: https://github.com/RafaelTrust/PokerQuiz_Final
+  * Repositório do Aplicativo: https://github.com/RafaelTrust/PokerQuiz_Final
   * Baixar Aplicativo: https://github.com/RafaelTrust/PokerQuiz_Final/release
 
 ## Apresentação
