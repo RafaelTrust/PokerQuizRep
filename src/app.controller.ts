@@ -13,7 +13,7 @@ import { ErroInterno } from './biblioteca/biblioteca.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get('teste')
   @ApiOperation({
     summary: 'Testa retorno da api',
   })

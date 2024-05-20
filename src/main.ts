@@ -2,13 +2,14 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { createWriteStream } from 'fs';
-import { get } from 'http';
+import * as express from 'express';
+import { ExpressAdapter } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  const serverUrl = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5';
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(express()),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Documentação da API do PokerQuiz')
@@ -33,6 +34,8 @@ async function bootstrap() {
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
     ],
   });
+
+  app.use(express.static('public'));
 
   await app.listen(process.env.PORT);
 }
