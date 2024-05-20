@@ -129,7 +129,6 @@ export class PerguntasController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Busca uma pergunta',
