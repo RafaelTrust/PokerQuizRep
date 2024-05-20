@@ -3,13 +3,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as express from 'express';
-import { ExpressAdapter } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(express()),
-  );
+  const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
     .setTitle('Documentação da API do PokerQuiz')
@@ -35,7 +32,7 @@ async function bootstrap() {
     ],
   });
 
-  app.use(express.static('public'));
+  app.use(express.static(join(__dirname, '..', 'public')));
 
   await app.listen(process.env.PORT);
 }
