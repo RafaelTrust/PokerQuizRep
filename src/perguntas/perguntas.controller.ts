@@ -22,12 +22,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PerguntaResponse } from './response/pergunta-response';
-import { ErroInterno } from 'src/Err/erro-interno';
+import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 import { ListaPerguntaResponse } from './response/lista-pergunta-response';
 import { ErroListaPergunta } from './response/err/erro-lista-pergunta';
 import { ErroPergunta } from './response/err/erro-pergunta';
-import { DeleteGeneral } from 'src/Err/delete-general';
-import { ErroUnauthorized } from 'src/Err/erro-unauthorized';
+import { DeleteGeneral } from 'src/biblioteca/Err/delete-general';
+import { ErroUnauthorized } from 'src/biblioteca/Err/erro-unauthorized';
 
 @ApiTags('Perguntas')
 @Controller('perguntas')

@@ -4,7 +4,7 @@ import { RecordeCreateDto } from './dto/recorde-create.dto';
 import { EstatisticaCompletoCreateDto } from './dto/estatistica-create.dto';
 import { ApiOkResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RecordeResponse } from './response/recorde-response';
-import { ErroInterno } from 'src/Err/erro-interno';
+import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 import { ListaRecordeResponse } from './response/lista-recorde-response';
 import { listaEstatisticaResponse } from './response/lista-estatistica-response';
 import { ErroRecorde } from './response/err/erro-recorde';

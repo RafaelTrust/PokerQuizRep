@@ -10,9 +10,9 @@ import {
 } from '@nestjs/swagger';
 import { ErroLogin } from './response/err/erro-login';
 import { TokenResponse } from 'src/usuarios/response/sucess/token-response';
-import { ErroInterno } from 'src/Err/erro-interno';
+import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 import { LogoutResponse } from './response/logout-response';
-import { ErroUnauthorized } from 'src/Err/erro-unauthorized';
+import { ErroUnauthorized } from 'src/biblioteca/Err/erro-unauthorized';
 import { LoginDto } from './dto/login-dto';
 import { CreatedTokenResponse } from './response/token-criado-response';
 

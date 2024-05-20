@@ -24,12 +24,12 @@ import { TokenResponse } from './response/sucess/token-response';
 import { NickValidoResponse } from './response/sucess/nick-response';
 import { EmailValidoResponse } from './response/sucess/email-response';
 import { ErroCodigo } from './response/err/erro-codigo';
-import { ErroInterno } from 'src/Err/erro-interno';
+import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 import { ErroCadastro } from './response/err/erro-cadastro';
 import { ErroEmail } from './response/err/erro-email';
-import { ErroUnauthorized } from 'src/Err/erro-unauthorized';
+import { ErroUnauthorized } from 'src/biblioteca/Err/erro-unauthorized';
 import { ErroUsuario } from './response/err/erro-usuario';
-import { DeleteGeneral } from 'src/Err/delete-general';
+import { DeleteGeneral } from 'src/biblioteca/Err/delete-general';
 
 @ApiTags('Usuarios')
 @Controller('usuarios')

@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { ApiOkResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EmailResponse } from './response/email-response';
-import { ErroInterno } from 'src/Err/erro-interno';
+import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 
 @ApiTags('Email')
 @Controller('email')

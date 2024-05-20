@@ -19,12 +19,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { SalaPerguntaResponse } from './response/sala-pergunta-response';
-import { ErroInterno } from 'src/Err/erro-interno';
+import { ErroInterno } from 'src/biblioteca/Err/erro-interno';
 import { ListaPerguntasResponse } from './response/lista-salas-response';
-import { ErroUnauthorized } from 'src/Err/erro-unauthorized';
+import { ErroUnauthorized } from 'src/biblioteca/Err/erro-unauthorized';
 import { ErroUsuario } from 'src/usuarios/response/err/erro-usuario';
 import { SalaResponse } from './response/sala-response';
-import { DeleteGeneral } from 'src/Err/delete-general';
+import { DeleteGeneral } from 'src/biblioteca/Err/delete-general';
 
 @ApiTags('Salas')
 @Controller('salas')
