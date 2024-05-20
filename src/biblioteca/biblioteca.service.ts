@@ -1,4 +1,7 @@
 import { Injectable } from '@nestjs/common';
+export * from './Err/delete-general';
+export * from './Err/erro-interno';
+export * from './Err/erro-unauthorized';
 
 @Injectable()
 export class BibliotecaService {
