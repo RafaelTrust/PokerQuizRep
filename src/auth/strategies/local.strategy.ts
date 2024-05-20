@@ -1,7 +1,12 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from '../auth.service';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -13,7 +18,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const usuario = await this.authService.validateUser(email, password);
 
     if (!usuario)
-      throw new UnauthorizedException('Erro ao encontrar email ou senha');
+      throw new HttpException(
+        { statusCode: 401, message: 'Email ou Senha Invalidos' },
+        HttpStatus.UNAUTHORIZED,
+      );
 
     return usuario;
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -58,7 +58,10 @@ export class UsuariosService {
       await usuario.save();
       return codValida;
     } else {
-      throw 'nick ou email ja existente';
+      throw new HttpException(
+        { statusCode: 409, message: 'Nick ou Email ja existente' },
+        HttpStatus.CONFLICT,
+      );
     }
   }
 
@@ -81,7 +84,10 @@ export class UsuariosService {
       const payload = { sub: usuario.nick, email: usuario.email };
       return this.jwtService.sign(payload, { expiresIn: '1h' });
     } else {
-      throw 'Codigo invalido';
+      throw new HttpException(
+        { statusCode: 400, message: 'Codigo invalido' },
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -89,12 +95,16 @@ export class UsuariosService {
     return await this.usuarioModel.findOne({ email });
   }
 
-  async findAll() {
-    return await this.usuarioModel.find();
-  }
-
   async findOne(nick: string) {
-    return await this.usuarioModel.findOne({ nick });
+    const usuario = await this.usuarioModel.findOne({ nick });
+    if (usuario) {
+      return usuario;
+    } else {
+      throw new HttpException(
+        { statusCode: 404, message: 'Falha ao encontrar o usuario' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async update(updateUsuarioDto: UpdateUsuarioDto, id: string) {
@@ -138,7 +148,10 @@ export class UsuariosService {
         `O codigo para resetar sua senha: ${cod}`,
       );
     } else {
-      throw 'falha ao encontrar email';
+      throw new HttpException(
+        { statusCode: 404, message: 'Falha ao encontrar email' },
+        HttpStatus.NOT_FOUND,
+      );
     }
     return usuario;
   }
@@ -151,7 +164,10 @@ export class UsuariosService {
       const payload = { sub: usuario.nick, email: usuario.email };
       return this.jwtService.sign(payload, { expiresIn: '1h' });
     } else {
-      throw 'codigo invalido';
+      throw new HttpException(
+        { statusCode: 400, message: 'Codigo invalido' },
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 }

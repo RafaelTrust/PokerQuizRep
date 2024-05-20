@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePerguntaDto } from './dto/create-pergunta.dto';
 import { UpdatePerguntaDto } from './dto/update-pergunta.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -150,27 +150,44 @@ export class PerguntasService {
     };
   }
 
-  findAll() {
-    return this.porguntaModel.find();
-  }
-
   async findBySala(sala_fk: string) {
     let listaPerguntas = await this.porguntaModel.find({ sala_fk });
-    console.log(listaPerguntas[0].toJSON());
-    return {
-      listaPerguntas,
-    };
+    if (listaPerguntas) {
+      return {
+        listaPerguntas,
+      };
+    } else {
+      throw new HttpException(
+        { statusCode: 404, message: 'Perguntas não encontradas pela mesa.' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async findOne(id: string) {
-    return await this.porguntaModel.findById(id);
+    const pergunta = await this.porguntaModel.findById(id);
+    if (pergunta) {
+      return pergunta;
+    } else {
+      throw new HttpException(
+        { statusCode: 404, message: 'Pergunta não encontrada.' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async update(id: string, updatePerguntaDto: UpdatePerguntaDto) {
     let pergunta = await this.porguntaModel.findOne({ _id: id });
-    updatePerguntaDto.sala_fk = pergunta.sala_fk;
-    pergunta = Object.assign(pergunta, updatePerguntaDto);
-    return pergunta.save();
+    if (pergunta) {
+      updatePerguntaDto.sala_fk = pergunta.sala_fk;
+      pergunta = Object.assign(pergunta, updatePerguntaDto);
+      return pergunta.save();
+    } else {
+      throw new HttpException(
+        { statusCode: 404, message: 'Pergunta não encontrada.' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async remove(id: string) {

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class BibliotecaService {
-  generateRandomConfirmationCode(length) {
+  generateRandomConfirmationCode(length: number) {
     const characters =
       '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let code = '';
@@ -15,7 +15,7 @@ export class BibliotecaService {
     return code;
   }
 
-  generateRandomConfirmationCodeNumber(length) {
+  generateRandomConfirmationCodeNumber(length: number) {
     const characters = '0123456789';
     let code = '';
 

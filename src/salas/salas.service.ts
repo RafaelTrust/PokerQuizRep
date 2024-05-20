@@ -19,7 +19,7 @@ export class SalasService {
     private readonly bibliotecaService: BibliotecaService,
   ) {}
 
-  async findPerguntasSalaPublica(cod: string) {
+  async findPerguntasSala(cod: string) {
     const sala = await this.salaModel.findOne({ codSala: cod });
     const listaPerguntas = await this.perguntaModel.find({ sala_fk: sala._id });
     return {

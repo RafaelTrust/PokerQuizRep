@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Recorde, RecordeDocument } from './entities/recorde.entity';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -39,28 +39,29 @@ export class RecordeService {
   async findRecordSala(cod: string) {
     const sala = await this.salaModel.findOne({ codSala: cod });
     const listaRecorde = await this.recordeModel.find({ sala_fk: sala._id });
-    return {
-      listaRecorde,
-    };
+    if (listaRecorde) {
+      return {
+        listaRecorde,
+      };
+    } else {
+      throw new HttpException(
+        { statusCode: 404, message: 'Falha ao encontrar a mesa nos recordes' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async createEstatistica(dto: EstatisticaCompletoCreateDto) {
     const sala = await this.salaModel.findOne({
       codSala: dto.listaEstatistica[0].sala_cod,
     });
-    let listaEstatistica = [];
-    for (let i = 0; i < dto.listaEstatistica.length; i++) {
-      let estatistica = await new this.estatisticaModdel({
-        sala_fk: sala._id,
-        ...dto.listaEstatistica[i],
-      });
-      await estatistica.save();
-      listaEstatistica.push(estatistica);
-    }
+    let estatistica = await new this.estatisticaModdel({
+      sala_fk: sala._id,
+      ...dto.listaEstatistica,
+    });
+    await estatistica.save();
 
-    return {
-      listaEstatistica,
-    };
+    return estatistica;
   }
 
   async getSalaEstatistica(cod: string) {
@@ -68,8 +69,18 @@ export class RecordeService {
     const listaEstatistica = await this.estatisticaModdel.find({
       sala_fk: sala._id,
     });
-    return {
-      listaEstatistica,
-    };
+    if (listaEstatistica) {
+      return {
+        listaEstatistica,
+      };
+    } else {
+      throw new HttpException(
+        {
+          statusCode: 404,
+          message: 'Falha ao encontrar a mesa nas estatisticas',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }

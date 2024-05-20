@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateSalaDto {
+export class SalaResponse {
+  @ApiProperty({
+    description: 'Id da sala criada',
+    example: '6636d1eed0607d8c3cae7cbe',
+  })
+  _id: string;
+
   @ApiProperty({
     description: 'Nome da mesa para os usuarios se lembrarem dela apenas.',
     example: 'Turma XYZ',
@@ -28,8 +34,19 @@ export class CreateSalaDto {
   limitPerguntas: number;
 
   @ApiProperty({
+    description:
+      'Codigo da mesa para poder ser encontrada por qualquer usuario.',
+    example: 'LELHiO',
+  })
+  @ApiProperty({
     description: 'Deixa visivel para todos os jogadores ou não.',
     example: true,
   })
   publico: Boolean;
+
+  @ApiProperty({
+    description: 'Numero da versão atualizada pela api',
+    example: 0,
+  })
+  __v: number;
 }
