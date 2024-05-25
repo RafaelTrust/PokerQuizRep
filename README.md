@@ -10,12 +10,12 @@
 
 ## Links relacionados
 
-  * Documentação da API: https://poker-quiz-rep.vercel.app/doc
-  * Repositório NestJS: https://github.com/nestjs/nest
-  * Artigo: https://docs.google.com/document/
-  * Repositório do Aplicativo: https://github.com/RafaelTrust/PokerQuiz_Final
-  * Baixar Aplicativo: https://github.com/RafaelTrust/PokerQuiz_Final/release
+  * [Documentação da API](https://poker-quiz-rep.vercel.app/doc)
+  * [Repositório NestJS ](https://github.com/nestjs/nest)
+  * [Artigo](https://docs.google.com/document/d/1AOFWz-7unNTdwh4U4K0Q8FOt1PKcmFECIMrZK7ysV_w/edit)
+  * [Repositório do Aplicativo](https://github.com/RafaelTrust/PokerQuiz_Final)
+  * [Baixar Aplicativo](https://github.com/RafaelTrust/PokerQuiz_Final/releases/)
 
 ## Apresentação
 
-[![](https://m.media-amazon.com/images/M/MV5BOTIyODY1OTYtZjAzNS00ZGQ2LWFhNmItMTJkYTc0MDNkYTk0XkEyXkFqcGdeQXVyODg3NTgyODQ@._V1_.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[![](https://i.imgur.com/pvKd7Jk.png)](https://www.youtube.com/watch?v=LsCjHyRAMgA)
